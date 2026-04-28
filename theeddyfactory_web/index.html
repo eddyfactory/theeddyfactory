@@ -122,6 +122,37 @@
       animation: fadeUp 1.5s ease-out 0.6s both
     }
 
+    .hero-actions {
+      margin-top: 110px;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      animation: fadeUp 1.5s ease-out 0.9s both;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #aa9977;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      padding: 0.8rem 2rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.4s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .hero-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #fffbe6;
+    }
+
     .scroll-hint {
       position: absolute;
       bottom: 2rem;
@@ -583,6 +614,10 @@
       <h1 class="hero-title">the eddy factory &nbsp;</h1>
       <p class="hero-mission">a socially-minded, human-centered, ai-powered, glass-box independent
         capital firm.</p>
+      <div class="hero-actions">
+        <a href="#" class="hero-btn">Discover</a>
+        <a href="#" class="hero-btn">Connect</a>
+      </div>
     </div>
     <div class="scroll-hint">scroll</div>
   </section>
