@@ -284,6 +284,33 @@
       border-color: rgba(255, 255, 255, 0.2);
       color: #fffbe6
     }
+
+    .entity-link circle {
+      cursor: pointer;
+      transition: opacity 0.3s ease
+    }
+
+    .entity-link:hover .dot-glow {
+      opacity: 0.6
+    }
+
+    .entity-link:hover .dot-core {
+      opacity: 1
+    }
+
+    .entity-link text {
+      fill: #fffbe6;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none
+    }
+
+    .entity-link:hover text {
+      opacity: 0.9
+    }
   </style>
 </head>
 
@@ -428,6 +455,47 @@
         <path
           d="M 818.3,668.3 C 727.8,700.7 705.0,705.5 682.6,708.4 C 660.8,711.2 638.8,712.2 617.5,711.6 C 596.7,711.0 576.1,708.7 556.2,705.0 C 536.9,701.3 518.0,696.2 500.0,689.7 C 482.5,683.5 465.6,675.9 449.8,667.2 C 434.4,658.8 419.7,649.2 406.2,638.7 C 393.1,628.6 380.8,617.4 369.7,605.7 C 359.0,594.3 349.1,582.1 340.5,569.5 C 332.2,557.2 324.8,544.4 318.7,531.3 C 312.7,518.7 307.7,505.6 303.9,492.5 C 300.2,479.8 297.5,466.8 295.8,454.0 C 294.2,441.6 293.6,429.1 294.0,416.9 C 294.3,405.1 295.6,393.3 297.7,382.0 C 299.8,371.0 302.8,360.2 306.4,350.0 C 310.0,340.0 314.3,330.4 319.3,321.4 C 324.1,312.6 329.5,304.2 335.5,296.5 C 341.3,289.1 347.6,282.1 354.3,275.8 C 360.8,269.6 367.8,264.0 374.9,259.1 C 381.9,254.4 389.3,250.2 396.7,246.7 C 403.9,243.3 411.4,240.4 418.8,238.3 C 426.0,236.1 433.4,234.6 440.7,233.7 C 447.8,232.7 454.9,232.4 461.9,232.6 C 468.6,232.8 475.3,233.5 481.7,234.8 C 488.0,235.9 494.2,237.6 500.0,239.7 C 505.7,241.7 511.2,244.2 516.3,247.0 C 521.3,249.7 526.1,252.9 530.5,256.3 C 534.7,259.6 538.7,263.2 542.3,267.0 C 545.8,270.7 549.0,274.7 551.8,278.7 C 554.5,282.7 556.9,286.9 558.9,291.1 C 560.8,295.2 562.4,299.5 563.7,303.7 C 564.9,307.9 565.8,312.1 566.3,316.2 C 566.8,320.3 567.0,324.3 566.9,328.3 C 566.8,332.1 566.4,335.9 565.7,339.6 C 565.0,343.2 564.0,346.7 562.8,350.0 C 561.7,353.2 560.3,356.4 558.7,359.3 C 557.1,362.1 555.3,364.9 553.4,367.4 C 551.5,369.8 549.5,372.1 547.3,374.1 C 545.2,376.1 542.9,377.9 540.6,379.5 C 538.3,381.0 536.0,382.4 533.5,383.5 C 531.2,384.7 528.8,385.6 526.4,386.3 C 524.0,387.0 521.6,387.5 519.2,387.8 C 516.9,388.1 514.6,388.2 512.4,388.1 C 510.2,388.0 508.0,387.8 505.9,387.4 C 503.9,387.0 501.9,386.5 500.0,385.8 C 498.2,385.2 496.4,384.3 494.7,383.4 C 493.1,382.5 491.5,381.5 490.1,380.4 C 488.7,379.4 487.4,378.2 486.3,377.0 C 485.1,375.7 484.1,374.5 483.2,373.1 C 482.3,371.8 481.5,370.5 480.9,369.1 C 480.3,367.8 479.7,366.4 479.3,365.0 C 478.9,363.7 478.7,362.3 478.5,361.0 C 478.3,359.7 478.2,358.3 478.3,357.1 C 478.3,355.8 478.5,354.6 478.7,353.4 C 478.9,352.2 479.2,351.1 479.6,350.0 C 480.0,349.0 480.4,347.9 481.0,347.0 C 481.5,346.1 482.0,345.2 482.7,344.4 C 483.3,343.6 483.9,342.8 484.6,342.2 C 485.3,341.5 486.1,340.9 486.8,340.4 C 487.6,339.9 488.3,339.5 489.1,339.1 C 489.9,338.7 490.7,338.5 491.4,338.2 C 492.2,338.0 493.0,337.8 493.8,337.7 C 494.5,337.6 495.2,337.6 496.0,337.6 C 496.7,337.6 497.4,337.7 498.1,337.9 C 498.7,338.0 499.4,338.2 500.0,338.4 C 500.6,338.6 501.2,338.8 501.7,339.1 C 502.2,339.4 502.7,339.8 503.2,340.1 C 503.7,340.5 504.1,340.8 504.5,341.3 C 504.8,341.6 505.2,342.1 505.5,342.5 C 505.7,342.9 506.0,343.3 506.2,343.8 C 506.4,344.2 506.6,344.7 506.7,345.1 C 506.8,345.6 506.9,346.0 507.0,346.4 C 507.0,346.9 507.1,347.3 507.0,347.7 C 507.0,348.1 507.0,348.5 506.9,348.9 C 506.9,349.3 506.7,349.6 506.6,350.0 C 506.5,350.3 506.4,350.7 506.2,351.0 C 506.0,351.3 505.8,351.6 505.6,351.8 C 505.4,352.1 505.2,352.3 505.0,352.5 C 504.8,352.7 504.5,352.9 504.3,353.1 C 504.0,353.3 503.7,353.5 503.5,353.5"
           fill="none" stroke="#bb66ee" stroke-width="3" stroke-linecap="round" opacity="0.88" />
+        <!-- Clickable entity dots at outer end of each spiral arm -->
+        <a href="#entity-love-house" class="entity-link">
+          <circle class="dot-glow" cx="950" cy="350" r="14" fill="#ff3355" opacity="0.25" />
+          <circle class="dot-core" cx="950" cy="350" r="5" fill="#ff3355" opacity="0.75" /><text x="950" y="335"
+            text-anchor="middle">Love House Publishing</text>
+        </a>
+        <a href="#entity-source-code" class="entity-link">
+          <circle class="dot-glow" cx="818" cy="32" r="14" fill="#ff4488" opacity="0.25" />
+          <circle class="dot-core" cx="818" cy="32" r="5" fill="#ff4488" opacity="0.75" /><text x="818" y="17"
+            text-anchor="middle">Source Code</text>
+        </a>
+        <a href="#entity-loveos" class="entity-link">
+          <circle class="dot-glow" cx="500" cy="-100" r="14" fill="#ff8800" opacity="0.25" />
+          <circle class="dot-core" cx="500" cy="-100" r="5" fill="#ff8800" opacity="0.75" /><text x="500" y="-115"
+            text-anchor="middle">LoveOS Labs</text>
+        </a>
+        <a href="#entity-signal" class="entity-link">
+          <circle class="dot-glow" cx="182" cy="32" r="14" fill="#ffcc00" opacity="0.25" />
+          <circle class="dot-core" cx="182" cy="32" r="5" fill="#ffcc00" opacity="0.75" /><text x="182" y="17"
+            text-anchor="middle">Signal Press</text>
+        </a>
+        <a href="#entity-unhiding" class="entity-link">
+          <circle class="dot-glow" cx="50" cy="350" r="14" fill="#00cc66" opacity="0.25" />
+          <circle class="dot-core" cx="50" cy="350" r="5" fill="#00cc66" opacity="0.75" /><text x="50" y="335"
+            text-anchor="middle">The Unhiding</text>
+        </a>
+        <a href="#entity-ventures" class="entity-link">
+          <circle class="dot-glow" cx="182" cy="668" r="14" fill="#00cccc" opacity="0.25" />
+          <circle class="dot-core" cx="182" cy="668" r="5" fill="#00cccc" opacity="0.75" /><text x="182" y="688"
+            text-anchor="middle">Eddy Ventures</text>
+        </a>
+        <a href="#entity-old-children" class="entity-link">
+          <circle class="dot-glow" cx="500" cy="800" r="14" fill="#2255ff" opacity="0.25" />
+          <circle class="dot-core" cx="500" cy="800" r="5" fill="#2255ff" opacity="0.75" /><text x="500" y="820"
+            text-anchor="middle">Old Children</text>
+        </a>
+        <a href="#entity-presence" class="entity-link">
+          <circle class="dot-glow" cx="818" cy="668" r="14" fill="#8833cc" opacity="0.25" />
+          <circle class="dot-core" cx="818" cy="668" r="5" fill="#8833cc" opacity="0.75" /><text x="818" y="688"
+            text-anchor="middle">Presence Studio</text>
+        </a>
       </g>
       <ellipse cx="500" cy="350" rx="75" ry="75" fill="url(#cg)" opacity="0.85" />
       <ellipse cx="500" cy="350" rx="30" ry="30" fill="url(#cg)" opacity="0.9" />
