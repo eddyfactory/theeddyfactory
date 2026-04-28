@@ -347,11 +347,17 @@
       letter-spacing: 0.1em;
       opacity: 0;
       transition: opacity 0.3s ease;
-      pointer-events: none
+      pointer-events: none;
+    }
+
+    @keyframes rotateOrbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .entity-link:hover text {
-      opacity: 0.9
+      opacity: 0.9;
+      animation: rotateOrbit 10s linear infinite;
     }
 
     /* Human Modal Styles */
@@ -576,43 +582,43 @@
         <!-- Clickable entity dots at outer end of each spiral arm -->
         <a href="#entity-love-house" class="entity-link">
           <circle class="dot-glow" cx="950" cy="350" r="14" fill="#ff3355" opacity="0.25" />
-          <circle class="dot-core" cx="950" cy="350" r="5" fill="#ff3355" opacity="0.75" /><text x="950" y="335"
-            text-anchor="middle">Love House Publishing</text>
+          <circle class="dot-core" cx="950" cy="350" r="5" fill="#ff3355" opacity="0.75" />
+          <text x="965" y="354" text-anchor="start" style="transform-origin: 950px 350px;">Love House Publishing</text>
         </a>
         <a href="#entity-source-code" class="entity-link">
           <circle class="dot-glow" cx="818" cy="32" r="14" fill="#ff4488" opacity="0.25" />
-          <circle class="dot-core" cx="818" cy="32" r="5" fill="#ff4488" opacity="0.75" /><text x="818" y="17"
-            text-anchor="middle">Source Code</text>
+          <circle class="dot-core" cx="818" cy="32" r="5" fill="#ff4488" opacity="0.75" />
+          <text x="833" y="36" text-anchor="start" style="transform-origin: 818px 32px;">Source Code</text>
         </a>
         <a href="#entity-loveos" class="entity-link">
           <circle class="dot-glow" cx="500" cy="-100" r="14" fill="#ff8800" opacity="0.25" />
-          <circle class="dot-core" cx="500" cy="-100" r="5" fill="#ff8800" opacity="0.75" /><text x="500" y="-115"
-            text-anchor="middle">LoveOS Labs</text>
+          <circle class="dot-core" cx="500" cy="-100" r="5" fill="#ff8800" opacity="0.75" />
+          <text x="515" y="-96" text-anchor="start" style="transform-origin: 500px -100px;">LoveOS Labs</text>
         </a>
         <a href="#entity-signal" class="entity-link">
           <circle class="dot-glow" cx="182" cy="32" r="14" fill="#ffcc00" opacity="0.25" />
-          <circle class="dot-core" cx="182" cy="32" r="5" fill="#ffcc00" opacity="0.75" /><text x="182" y="17"
-            text-anchor="middle">Signal Press</text>
+          <circle class="dot-core" cx="182" cy="32" r="5" fill="#ffcc00" opacity="0.75" />
+          <text x="197" y="36" text-anchor="start" style="transform-origin: 182px 32px;">Signal Press</text>
         </a>
         <a href="#entity-unhiding" class="entity-link">
           <circle class="dot-glow" cx="50" cy="350" r="14" fill="#00cc66" opacity="0.25" />
-          <circle class="dot-core" cx="50" cy="350" r="5" fill="#00cc66" opacity="0.75" /><text x="50" y="335"
-            text-anchor="middle">The Unhiding</text>
+          <circle class="dot-core" cx="50" cy="350" r="5" fill="#00cc66" opacity="0.75" />
+          <text x="65" y="354" text-anchor="start" style="transform-origin: 50px 350px;">The Unhiding</text>
         </a>
         <a href="#entity-ventures" class="entity-link">
           <circle class="dot-glow" cx="182" cy="668" r="14" fill="#00cccc" opacity="0.25" />
-          <circle class="dot-core" cx="182" cy="668" r="5" fill="#00cccc" opacity="0.75" /><text x="182" y="688"
-            text-anchor="middle">Eddy Ventures</text>
+          <circle class="dot-core" cx="182" cy="668" r="5" fill="#00cccc" opacity="0.75" />
+          <text x="197" y="672" text-anchor="start" style="transform-origin: 182px 668px;">Eddy Ventures</text>
         </a>
         <a href="#entity-old-children" class="entity-link">
           <circle class="dot-glow" cx="500" cy="800" r="14" fill="#2255ff" opacity="0.25" />
-          <circle class="dot-core" cx="500" cy="800" r="5" fill="#2255ff" opacity="0.75" /><text x="500" y="820"
-            text-anchor="middle">Old Children</text>
+          <circle class="dot-core" cx="500" cy="800" r="5" fill="#2255ff" opacity="0.75" />
+          <text x="515" y="804" text-anchor="start" style="transform-origin: 500px 800px;">Old Children</text>
         </a>
         <a href="#entity-presence" class="entity-link">
           <circle class="dot-glow" cx="818" cy="668" r="14" fill="#8833cc" opacity="0.25" />
-          <circle class="dot-core" cx="818" cy="668" r="5" fill="#8833cc" opacity="0.75" /><text x="818" y="688"
-            text-anchor="middle">Presence Studio</text>
+          <circle class="dot-core" cx="818" cy="668" r="5" fill="#8833cc" opacity="0.75" />
+          <text x="833" y="672" text-anchor="start" style="transform-origin: 818px 668px;">Presence Studio</text>
         </a>
       </g>
       <ellipse cx="500" cy="350" rx="75" ry="75" fill="url(#cg)" opacity="0.85" />
