@@ -653,7 +653,7 @@
   <!-- ============================================================
      FRAMEWORK: LoveOS + Three Pillars
      ============================================================ -->
-  <section class="section">
+  <section class="section" id="screen-framework">
     <p class="section-label">framework</p>
     <h2 class="section-title">Love is not sentiment.<br>It is the operating system.</h2>
     <p class="section-text">LoveOS is the proposition that Love &mdash; not as emotion but as connective intelligence
@@ -681,7 +681,7 @@
   <!-- ============================================================
      ORGANISM: The Eight Entities
      ============================================================ -->
-  <section class="section">
+  <section class="section" id="screen-organism">
     <p class="section-label">organism</p>
     <h2 class="section-title">Eight entities. One living system.</h2>
     <p class="section-text">Not a holding company. Not a portfolio. An eddy &mdash; energy circulating, feeding back
@@ -771,31 +771,150 @@
       base: "font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 2px 4px; border-radius: 2px;",
       text: "color: #a89880; font-family: 'JetBrains Mono', monospace; font-size: 11px;",
       bold: "color: #fffbe6; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold;",
-      
+      getTime: function() {
+        const d = new Date();
+        const pad = (n, l=2) => String(n).padStart(l, '0');
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${pad(d.getMilliseconds(), 3)}`;
+      },
       boot: function() {
-        console.log("%c==========================================\n" +
+        console.log(`%c[${this.getTime()}]%c ==========================================\n` +
                     " THE EDDY FACTORY // LOVE OS INITIALIZED \n" +
                     "==========================================", 
+                    this.text,
                     "color: #fffbe6; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: bold; text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);");
       },
       system: function(msg) {
-        console.log(`%c[SYSTEM]%c ${msg}`, 
-          this.base + "background: #2255ff; color: #fff;", this.text);
+        console.log(`%c[${this.getTime()}]%c %c[SYSTEM]%c ${msg}`, 
+          this.text, "", this.base + "background: #2255ff; color: #fff;", this.text);
       },
       audio: function(state) {
         const color = state === 'PLAYING' ? '#00cc66' : '#ff3355';
-        console.log(`%c[AUDIO]%c Ambient subsystem state: %c${state}`, 
-          this.base + "background: " + color + "; color: #020208; font-weight: bold;", this.text,
+        console.log(`%c[${this.getTime()}]%c %c[AUDIO]%c Ambient subsystem state: %c${state}`, 
+          this.text, "", this.base + "background: " + color + "; color: #020208; font-weight: bold;", this.text,
           "color: " + color + "; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold;");
       },
       interaction: function(entity, action) {
-        console.log(`%c[INTERACT]%c %c${entity}%c > ${action}`, 
-          this.base + "background: #bb66ee; color: #fff;", this.text, this.bold, this.text);
+        console.log(`%c[${this.getTime()}]%c %c[INTERACT]%c %c${entity}%c > ${action}`, 
+          this.text, "", this.base + "background: #bb66ee; color: #fff;", this.text, this.bold, this.text);
+      },
+      click: function(targetInfo, textStr, x, y) {
+        if (textStr) {
+          console.log(`%c[${this.getTime()}]%c %c[CLICK]%c Element: %c${targetInfo}%c "%c${textStr}%c" at (X:${x}, Y:${y})`, 
+            this.text, "", this.base + "background: #ffcc00; color: #020208; font-weight: bold;", this.text, this.bold, this.text, "color: #00cc66; font-style: italic;", this.text);
+        } else {
+          console.log(`%c[${this.getTime()}]%c %c[CLICK]%c Element: %c${targetInfo}%c at (X:${x}, Y:${y})`, 
+            this.text, "", this.base + "background: #ffcc00; color: #020208; font-weight: bold;", this.text, this.bold, this.text);
+        }
+      },
+      screen: function(screenNum, title) {
+        console.log(`%c[${this.getTime()}]%c %c[SCREEN]%c Focus active in %cScreen ${screenNum} - ${title}`, 
+          this.text, "", this.base + "background: #00cccc; color: #020208; font-weight: bold;", this.text, this.bold);
+      },
+      telemetry: async function() {
+        console.groupCollapsed(`%c[${this.getTime()}]%c %c[TELEMETRY]%c System & Connection Fingerprint`, 
+          this.text, "", this.base + "background: #ff8800; color: #fff;", this.bold);
+        
+        // System & Display
+        console.log(`%cOS/Platform:%c ${navigator.platform}`, this.text, this.bold);
+        console.log(`%cCPU Cores:%c ${navigator.hardwareConcurrency || 'Unknown'}`, this.text, this.bold);
+        console.log(`%cDevice Memory:%c ${navigator.deviceMemory ? navigator.deviceMemory + 'GB' : 'Unknown'}`, this.text, this.bold);
+        console.log(`%cResolution:%c ${window.screen.width}x${window.screen.height} (PixelRatio: ${window.devicePixelRatio})`, this.text, this.bold);
+        console.log(`%cLanguage:%c ${navigator.language}`, this.text, this.bold);
+        
+        // Session & Network
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        console.log(`%cTimezone:%c ${timezone}`, this.text, this.bold);
+        
+        if (navigator.connection) {
+          console.log(`%cConnection Type:%c ${navigator.connection.effectiveType || 'Unknown'}`, this.text, this.bold);
+        }
+        
+        const loadTime = window.performance && window.performance.timing 
+            ? window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart 
+            : 'Unknown';
+        console.log(`%cDOM Load Time:%c ${loadTime}ms`, this.text, this.bold);
+
+        // Fetch IP
+        try {
+          const res = await fetch('https://api.ipify.org?format=json');
+          const data = await res.json();
+          console.log(`%cPublic IP:%c ${data.ip}`, this.text, "color: #00cc66; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold;");
+        } catch(e) {
+          console.log(`%cPublic IP:%c Fetch Blocked/Failed`, this.text, "color: #ff3355; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold;");
+        }
+        
+        console.groupEnd();
       }
     };
     
-    // Fire boot sequence
+    // Fire boot sequence and telemetry
     Logger.boot();
+    Logger.telemetry();
+
+    // Global Click Logger (Using capturing phase to catch clicks before stopPropagation)
+    document.addEventListener('click', function(e) {
+      let target = e.target;
+      let tag = target.tagName ? target.tagName.toLowerCase() : 'unknown';
+      let id = target.id ? `#${target.id}` : '';
+      let classes = '';
+      
+      if (typeof target.className === 'string' && target.className.trim()) {
+        classes = `.${target.className.trim().replace(/\s+/g, '.')}`;
+      } else if (target.className && target.className.baseVal) {
+        // SVG elements use baseVal for className
+        classes = `.${target.className.baseVal.trim().replace(/\s+/g, '.')}`;
+      }
+
+      let info = `${tag}${id}${classes}`;
+      if (info.length > 50) info = info.substring(0, 47) + '...';
+      
+      let textStr = '';
+      if (target.textContent && target.textContent.trim()) {
+        textStr = target.textContent.trim().replace(/\s+/g, ' ');
+      } else if (target.closest && target.closest('.entity-link')) {
+        // If clicking a glowing dot, try to pull the text from its parent entity-link
+        let textNode = target.closest('.entity-link').querySelector('text');
+        if (textNode && textNode.textContent) {
+          textStr = textNode.textContent.trim().replace(/\s+/g, ' ');
+        }
+      }
+      
+      if (textStr.length > 30) textStr = textStr.substring(0, 27) + '...';
+
+      Logger.click(info, textStr, e.clientX, e.clientY);
+    }, true);
+
+    // Mouse Rest Screen Logger
+    let mouseRestTimer;
+    let lastLoggedScreen = 0;
+    
+    document.addEventListener('mousemove', function(e) {
+      clearTimeout(mouseRestTimer);
+      mouseRestTimer = setTimeout(function() {
+        const frameworkSec = document.getElementById('screen-framework');
+        const organismSec = document.getElementById('screen-organism');
+        
+        let screenNum = 1;
+        let screenName = "TOP";
+        
+        if (frameworkSec && organismSec) {
+          // Determine region based on total page Y coordinates
+          if (e.pageY >= organismSec.offsetTop) {
+            screenNum = 3;
+            screenName = "ORGANISM";
+          } else if (e.pageY >= frameworkSec.offsetTop) {
+            screenNum = 2;
+            screenName = "FRAMEWORK";
+          }
+        }
+        
+        // Log whenever the mouse comes to rest in a new screen
+        if (lastLoggedScreen !== screenNum) {
+          Logger.screen(screenNum, screenName);
+          lastLoggedScreen = screenNum;
+        }
+      }, 500); // Trigger after 500ms of no movement
+    });
 
     /*
      * ═══════════════════════════════════════════════════════════════
