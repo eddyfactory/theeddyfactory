@@ -302,10 +302,9 @@
       color: #443322
     }
 
-    .audio-btn {
+    .corner-btn {
       position: fixed;
       bottom: 1.5rem;
-      right: 1.5rem;
       z-index: 100;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -319,7 +318,10 @@
       border-radius: 2px
     }
 
-    .audio-btn:hover {
+    .corner-btn.corner-left { left: 1.5rem; }
+    .corner-btn.corner-right { right: 1.5rem; }
+
+    .corner-btn:hover {
       background: rgba(255, 255, 255, 0.1);
       border-color: rgba(255, 255, 255, 0.2);
       color: #fffbe6
@@ -723,9 +725,24 @@
   </footer>
 
   <!-- ============================================================
-     AUDIO: Autoplay ambient sound, user can silence/unsilence
+     CORNER BUTTONS & CREDITS MODAL
      ============================================================ -->
-  <button class="audio-btn" id="audioBtn">silence</button>
+  <button class="corner-btn corner-left" id="audioBtn">silence</button>
+  <button class="corner-btn corner-right" id="creditsBtn">credits</button>
+
+  <div id="creditsModal" class="human-modal hidden">
+    <div class="human-modal-content">
+      <p class="human-modal-q">Credits</p>
+      <div style="color: #a89880; font-size: 1rem; line-height: 1.8; margin-bottom: 2rem; font-weight: 300;">
+        <p>Design &amp; Code: Antigravity</p>
+        <p>Audio: Chaplin Funk</p>
+        <p>Typography: Cormorant Garamond &amp; JetBrains Mono</p>
+      </div>
+      <div class="human-modal-actions">
+        <button class="human-btn" id="closeCreditsBtn">Close</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     /*
@@ -773,12 +790,23 @@
     });
 
     /* Human Modal Logic */
-    document.querySelectorAll('.human-btn').forEach(function (btn) {
+    document.querySelectorAll('#humanModal .human-btn').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.stopPropagation(); // prevent document click listener from double firing
         startAudio();
         document.getElementById('humanModal').classList.add('hidden');
       });
+    });
+
+    /* Credits Modal Logic */
+    document.getElementById('creditsBtn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      document.getElementById('creditsModal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeCreditsBtn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      document.getElementById('creditsModal').classList.add('hidden');
     });
   </script>
 
