@@ -363,6 +363,13 @@
       animation: rotateOrbit 10s linear infinite;
     }
 
+    .entity-link.cooldown text,
+    .entity-link.fade-out text {
+      opacity: 0;
+      animation: rotateOrbit 10s linear infinite;
+      animation-play-state: paused;
+    }
+
     /* Human Modal Styles */
     .human-modal {
       position: fixed;
@@ -832,7 +839,22 @@
         } else {
           this.classList.add('active');
           this.classList.remove('cooldown');
+          this.classList.remove('fade-out');
         }
+      });
+
+      link.addEventListener('mouseleave', function() {
+        if (!this.classList.contains('active')) {
+          this.classList.add('fade-out');
+          var self = this;
+          setTimeout(function() {
+            self.classList.remove('fade-out');
+          }, 300);
+        }
+      });
+      
+      link.addEventListener('mouseenter', function() {
+        this.classList.remove('fade-out');
       });
     });
   </script>
