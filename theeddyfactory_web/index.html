@@ -567,7 +567,7 @@
 
     /* Autoplay on first user interaction (required by browsers) */
     document.addEventListener("click", startAudio, { once: false });
-    document.addEventListener("scroll", startAudio, { once: false });
+    window.addEventListener("scroll", startAudio, { once: false });
     document.addEventListener("keydown", startAudio, { once: false });
 
     /* Also try immediately — works if user has interacted with domain before */
