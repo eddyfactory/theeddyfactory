@@ -133,24 +133,32 @@
     }
 
     .hero-btn {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
       color: #aa9977;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
       letter-spacing: 0.3em;
-      padding: 0.8rem 2rem;
+      padding: 1rem 2.5rem;
       cursor: pointer;
       text-transform: uppercase;
-      transition: all 0.4s ease;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       text-decoration: none;
       display: inline-block;
+      backdrop-filter: blur(2px);
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     .hero-btn:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.3);
       color: #fffbe6;
+      backdrop-filter: blur(4px);
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1), inset 0 0 15px rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
     }
 
     .scroll-hint {
@@ -615,8 +623,8 @@
       <p class="hero-mission">a socially-minded, human-centered, ai-powered, glass-box independent
         capital firm.</p>
       <div class="hero-actions">
-        <a href="#" class="hero-btn">Discover</a>
-        <a href="#" class="hero-btn">Connect</a>
+        <a href="#" class="hero-btn">SHOW LOVE</a>
+        <a href="#" class="hero-btn">INVEST USD</a>
       </div>
     </div>
     <div class="scroll-hint">scroll</div>
