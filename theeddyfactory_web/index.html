@@ -209,6 +209,43 @@
       border-color: rgba(255, 255, 255, 0.4);
     }
 
+    .action-trash-btn {
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 14px;
+      line-height: 26px;
+      text-align: center;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 1rem;
+      vertical-align: middle;
+    }
+
+    .action-trash-btn:hover:not(:disabled) {
+      background: rgba(255, 100, 100, 0.2);
+      border-color: rgba(255, 100, 100, 0.4);
+      color: #ffbbbb;
+    }
+
+    .action-trash-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .action-trash-btn svg {
+      width: 14px;
+      height: 14px;
+      position: static;
+    }
+
     .action-panel.hidden {
       opacity: 0;
       max-height: 0;
@@ -788,14 +825,17 @@
       <div id="actionPanel" class="action-panel hidden">
         <button id="actionCloseBtn" class="action-close-btn">&times;</button>
         <div class="action-panel-section">
-          <label id="actionMessageLabel" class="action-label">LOVE MESSAGE</label>
+          <label id="actionMessageLabel" class="action-label">MESSAGE OF LOVE</label>
           <textarea id="actionMessageInput" class="action-input" placeholder="Enter your message (max 300 chars)..." maxlength="300"></textarea>
         </div>
         <div class="action-panel-section" style="text-align: center;">
-          <button id="actionSaveBtn" class="hero-btn" style="padding: 0.5rem 1.5rem; font-size: 0.7rem; border-color: rgba(255,255,255,0.2);">SEND</button>
+          <button id="actionSaveBtn" class="hero-btn" style="padding: 0.5rem 1.5rem; font-size: 0.7rem; border-color: rgba(255,255,255,0.2); vertical-align: middle;">SEND</button>
+          <button id="actionTrashBtn" class="action-trash-btn" disabled title="Clear Message">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
         </div>
         <div class="action-panel-section">
-          <label id="actionMoneyLabel" class="action-label">MONEY AS LOVE</label>
+          <label id="actionMoneyLabel" class="action-label">LOVE AS AWARENESS</label>
           <div class="action-tiers">
             <a href="http://127.0.0.1:5500" class="tier-link">Tier 1</a>
             <a href="http://127.0.0.1:5500" class="tier-link">Tier 2</a>
@@ -973,6 +1013,18 @@
         console.log(`%c[${this.getTime()}]%c %c[SCREEN]%c Focus active in %cScreen ${screenNum} - ${title}`, 
           this.text, "", this.base + "background: #00cccc; color: #020208; font-weight: bold;", this.text, this.bold);
       },
+      temporal: function(key, timeSpent, fullLedger) {
+        console.groupCollapsed(`%c[${this.getTime()}]%c %c[TEMPORAL]%c Ledger Updated: %c+${(timeSpent/1000).toFixed(1)}s%c to ${key}`, 
+          this.text, "", this.base + "background: #0088cc; color: #fff; font-weight: bold;", this.text, "color: #00cc66; font-weight: bold;", this.text);
+        
+        // Convert to seconds for a prettier table
+        const displayLedger = {};
+        for (const [k, v] of Object.entries(fullLedger)) {
+          displayLedger[k] = { "Time (Seconds)": (v / 1000).toFixed(1) + "s" };
+        }
+        console.table(displayLedger);
+        console.groupEnd();
+      },
       telemetry: async function() {
         console.groupCollapsed(`%c[${this.getTime()}]%c %c[TELEMETRY]%c System & Connection Fingerprint`, 
           this.text, "", this.base + "background: #ff8800; color: #fff;", this.bold);
@@ -1099,7 +1151,7 @@
             }
             localStorage.setItem('eddyTemporalData', JSON.stringify(eddyTemporalData));
             
-            Logger.system(`Temporal Ledger Updated: +${(timeSpent/1000).toFixed(1)}s to ${key}`);
+            Logger.temporal(key, timeSpent, eddyTemporalData);
           }
           
           Logger.screen(screenNum, screenName);
@@ -1227,6 +1279,7 @@
     const actionMoneyLabel = document.getElementById('actionMoneyLabel');
     const actionCloseBtn = document.getElementById('actionCloseBtn');
     const actionSaveBtn = document.getElementById('actionSaveBtn');
+    const actionTrashBtn = document.getElementById('actionTrashBtn');
     const actionMessageInput = document.getElementById('actionMessageInput');
     
     let currentActionContext = '';
@@ -1238,11 +1291,11 @@
         currentActionContext = actionType;
         
         if (actionType === 'SHOW LOVE') {
-          actionMessageLabel.textContent = 'LOVE MESSAGE';
-          actionMoneyLabel.textContent = 'MONEY AS LOVE';
+          actionMessageLabel.textContent = 'MESSAGE OF LOVE';
+          actionMoneyLabel.textContent = 'LOVE AS AWARENESS';
         } else if (actionType === 'INVEST USD') {
           actionMessageLabel.textContent = 'INVESTMENT MESSAGE';
-          actionMoneyLabel.textContent = 'MONEY AS INVESTMENT';
+          actionMoneyLabel.textContent = 'INVESTMENT AS MONEY';
         }
         
         if (actionPanel.classList.contains('hidden')) {
@@ -1252,6 +1305,20 @@
           Logger.interaction('ActionPanel', `Switched context to ${actionType}`);
         }
       });
+    });
+
+    actionTrashBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.removeItem('eddyActionMessage');
+      localStorage.removeItem('eddyActionContext');
+      actionMessageInput.value = '';
+      actionMessageInput.disabled = false;
+      actionMessageInput.classList.remove('frozen');
+      actionSaveBtn.textContent = 'SEND';
+      actionSaveBtn.disabled = false;
+      actionSaveBtn.style.opacity = '1';
+      actionTrashBtn.disabled = true;
+      Logger.interaction('ActionPanel', 'Message cleared and unfrozen');
     });
 
     actionCloseBtn.addEventListener('click', function(e) {
@@ -1279,9 +1346,10 @@
         // Gray-over the message
         actionMessageInput.disabled = true;
         actionMessageInput.classList.add('frozen');
-        actionSaveBtn.textContent = 'SAVED';
+        actionSaveBtn.textContent = 'SENT';
         actionSaveBtn.disabled = true;
         actionSaveBtn.style.opacity = '0.5';
+        actionTrashBtn.disabled = false;
         
         Logger.interaction('ActionPanel', 'Message frozen in carbonite');
       }
@@ -1294,18 +1362,19 @@
       actionMessageInput.value = savedMsg;
       actionMessageInput.disabled = true;
       actionMessageInput.classList.add('frozen');
-      actionSaveBtn.textContent = 'SAVED';
+      actionSaveBtn.textContent = 'SENT';
       actionSaveBtn.disabled = true;
       actionSaveBtn.style.opacity = '0.5';
+      actionTrashBtn.disabled = false;
       
       if (savedCtx) {
         currentActionContext = savedCtx;
         if (savedCtx === 'SHOW LOVE') {
-          actionMessageLabel.textContent = 'LOVE MESSAGE';
-          actionMoneyLabel.textContent = 'MONEY AS LOVE';
+          actionMessageLabel.textContent = 'MESSAGE OF LOVE';
+          actionMoneyLabel.textContent = 'LOVE AS AWARENESS';
         } else if (savedCtx === 'INVEST USD') {
           actionMessageLabel.textContent = 'INVESTMENT MESSAGE';
-          actionMoneyLabel.textContent = 'MONEY AS INVESTMENT';
+          actionMoneyLabel.textContent = 'INVESTMENT AS MONEY';
         }
       }
     }
