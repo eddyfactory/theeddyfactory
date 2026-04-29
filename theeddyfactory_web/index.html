@@ -1047,10 +1047,19 @@
       Logger.click(info, textStr, e.clientX, e.clientY);
     }, true);
 
-    // Mouse Rest Screen Logger
+    // Temporal Tracking & Mouse Rest Screen Logger
     let mouseRestTimer;
-    let lastLoggedScreen = -1; // Initialize to -1 so Screen 0 logs on first rest
+    let lastLoggedScreen = -1;
+    let screenEntryTime = Date.now();
+    let lastKnownScreenName = "TOP";
     
+    // Initialize or retrieve ledger
+    let eddyTemporalData = { "Screen_0_VERIFICATION": 0, "Screen_1_TOP": 0, "Screen_2_FRAMEWORK": 0, "Screen_3_ORGANISM": 0 };
+    const savedTemporal = localStorage.getItem('eddyTemporalData');
+    if (savedTemporal) {
+      try { eddyTemporalData = JSON.parse(savedTemporal); } catch(e) {}
+    }
+
     document.addEventListener('mousemove', function(e) {
       clearTimeout(mouseRestTimer);
       mouseRestTimer = setTimeout(function() {
@@ -1078,8 +1087,25 @@
         
         // Log whenever the mouse comes to rest in a new screen
         if (lastLoggedScreen !== screenNum) {
+          // Record time spent in previous screen
+          if (lastLoggedScreen !== -1) {
+            const timeSpent = Date.now() - screenEntryTime;
+            const key = `Screen_${lastLoggedScreen}_${lastKnownScreenName}`;
+            
+            if (eddyTemporalData[key] !== undefined) {
+              eddyTemporalData[key] += timeSpent;
+            } else {
+              eddyTemporalData[key] = timeSpent;
+            }
+            localStorage.setItem('eddyTemporalData', JSON.stringify(eddyTemporalData));
+            
+            Logger.system(`Temporal Ledger Updated: +${(timeSpent/1000).toFixed(1)}s to ${key}`);
+          }
+          
           Logger.screen(screenNum, screenName);
           lastLoggedScreen = screenNum;
+          lastKnownScreenName = screenName;
+          screenEntryTime = Date.now(); // reset the stopwatch
         }
       }, 500); // Trigger after 500ms of no movement
     });
