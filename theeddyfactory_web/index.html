@@ -1228,7 +1228,18 @@
     }
 
     const currentJukeboxTrack = JUKEBOX_TRACKS[trackIndex];
-    console.log(`%c[JUKEBOX]%c Track algorithm selected index ${trackIndex} (Day ${currentDay})`, "background: #ff00ff; color: #fff; padding: 2px 4px; border-radius: 2px;", "");
+    console.groupCollapsed(`%c[JUKEBOX]%c Now Playing: ${currentJukeboxTrack.song} by ${currentJukeboxTrack.band} (Day ${currentDay})`, "background: #ff00ff; color: #fff; padding: 2px 4px; border-radius: 2px; font-weight: bold;", "");
+    console.log(`%cCalendar Day:%c ${currentDay}`, "color: #a89880; font-weight: bold;", "");
+    console.log(`%cArray Index:%c ${trackIndex}`, "color: #a89880; font-weight: bold;", "");
+    console.log(`%cSelection Logic:%c ${currentDay === 31 ? "Randomized (Day 31)" : "Deterministic (Days 1-30)"}`, "color: #a89880; font-weight: bold;", "");
+    console.table({
+      "File": currentJukeboxTrack.file,
+      "Song": currentJukeboxTrack.song,
+      "Band": currentJukeboxTrack.band,
+      "Album": currentJukeboxTrack.album,
+      "Publisher": currentJukeboxTrack.publisher
+    });
+    console.groupEnd();
 
     /* ═══════════════════════════════════════════════════════════════ */
 
