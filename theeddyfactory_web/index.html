@@ -955,8 +955,14 @@
       <p class="human-modal-q">Credits</p>
       <div style="color: #a89880; font-size: 1rem; line-height: 1.8; margin-bottom: 2rem; font-weight: 300;">
         <p>Design &amp; Code: Antigravity</p>
-        <p>Audio: Chaplin Funk</p>
         <p>Typography: Cormorant Garamond &amp; JetBrains Mono</p>
+        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(168,152,128,0.2);">
+          <p style="font-size: 0.8rem; margin-bottom: 0.5rem; opacity: 0.7;">NOW PLAYING</p>
+          <p>Song: <span id="creditSong">Unknown</span></p>
+          <p>Band: <a href="#" id="creditBand" target="_blank" style="color: #fffbe6; text-decoration: none; border-bottom: 1px solid rgba(255,251,230,0.3);">Unknown</a></p>
+          <p>Album: <span id="creditAlbum">Unknown</span></p>
+          <p>Publisher: <a href="#" id="creditPublisher" target="_blank" style="color: #fffbe6; text-decoration: none; border-bottom: 1px solid rgba(255,251,230,0.3);">Unknown</a></p>
+        </div>
       </div>
       <div class="human-modal-actions">
         <button class="human-btn" id="closeCreditsBtn">Close</button>
@@ -1187,17 +1193,46 @@
 
     /*
      * ═══════════════════════════════════════════════════════════════
-     * AMBIENT AUDIO CONFIGURATION
+     * AMBIENT AUDIO CONFIGURATION & JUKEBOX ALGORITHM
      * Change the URL below to swap the background audio file.
      * Use any publicly hosted .mp3, .ogg, or .wav URL.
      * Audio autoplays on first user interaction (browser policy
      * requires at least one click/scroll/keypress before playing).
      * ═══════════════════════════════════════════════════════════════
      */
-    var AMBIENT_AUDIO_URL = "./chaplin_funk.mp3";
+    const JUKEBOX_TRACKS = [
+      { file: './chaplin_funk.mp3', band: 'Unknown Band', song: 'Chaplin Funk', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+      { file: './7.mp3', band: 'Unknown Band', song: '7', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+      { file: './aint_got_no.mp3', band: 'Unknown Band', song: 'Ain\'t Got No', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+      { file: './warm_foothills.mp3', band: 'Unknown Band', song: 'Warm Foothills', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+      { file: './high_steppin.mp3', band: 'Unknown Band', song: 'High Steppin', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+      { file: './dont_go_dark.mp3', band: 'Unknown Band', song: 'Don\'t Go Dark', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+      { file: './life_in_a_northern_town.mp3', band: 'Unknown Band', song: 'Life in a Northern Town', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+      { file: './heroes_reprise_version.mp3', band: 'Unknown Band', song: 'Heroes (Reprise Version)', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+      { file: './the_man_comes_around.mp3', band: 'Unknown Band', song: 'The Man Comes Around', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+      { file: './o-o-h_child.mp3', band: 'Unknown Band', song: 'O-o-h Child', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' }
+    ];
+
+    const currentDay = new Date().getDate();
+    let trackIndex = 0;
+
+    if (currentDay >= 1 && currentDay <= 10) {
+      trackIndex = currentDay - 1;
+    } else if (currentDay >= 11 && currentDay <= 20) {
+      trackIndex = currentDay - 11;
+    } else if (currentDay >= 21 && currentDay <= 30) {
+      trackIndex = currentDay - 21;
+    } else {
+      // Day 31
+      trackIndex = Math.floor(Math.random() * 10);
+    }
+
+    const currentJukeboxTrack = JUKEBOX_TRACKS[trackIndex];
+    console.log(`%c[JUKEBOX]%c Track algorithm selected index ${trackIndex} (Day ${currentDay})`, "background: #ff00ff; color: #fff; padding: 2px 4px; border-radius: 2px;", "");
+
     /* ═══════════════════════════════════════════════════════════════ */
 
-    var audio = new Audio(AMBIENT_AUDIO_URL);
+    var audio = new Audio(currentJukeboxTrack.file);
     audio.loop = true;
     audio.volume = 0.3;
     var silenced = false;
@@ -1248,6 +1283,20 @@
     document.getElementById('creditsBtn').addEventListener('click', function (e) {
       e.stopPropagation();
       Logger.system('Credits modal accessed.');
+      
+      // Populate metadata from the Jukebox
+      document.getElementById('creditSong').textContent = currentJukeboxTrack.song;
+      
+      const bandLink = document.getElementById('creditBand');
+      bandLink.textContent = currentJukeboxTrack.band;
+      bandLink.href = currentJukeboxTrack.bandUrl;
+      
+      document.getElementById('creditAlbum').textContent = currentJukeboxTrack.album;
+      
+      const pubLink = document.getElementById('creditPublisher');
+      pubLink.textContent = currentJukeboxTrack.publisher;
+      pubLink.href = currentJukeboxTrack.publisherUrl;
+      
       document.getElementById('creditsModal').classList.remove('hidden');
     });
 
