@@ -163,6 +163,143 @@
       transform: translateY(-2px);
     }
 
+    /* Action Panel Styles */
+    .action-panel {
+      position: relative;
+      margin-top: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      text-align: left;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 1;
+      max-height: 600px;
+    }
+
+    .action-close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 16px;
+      line-height: 26px;
+      text-align: center;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .action-panel.hidden {
+      opacity: 0;
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 0;
+      border: none;
+      pointer-events: none;
+    }
+
+    .action-panel-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .action-panel-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .action-label {
+      display: block;
+      color: #aa9977;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .action-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      padding: 1rem;
+      resize: none;
+      height: 100px;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .action-input:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+
+    .action-input.frozen {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: rgba(0, 0, 0, 0.4);
+      color: #999;
+      pointer-events: none;
+      border-color: rgba(255, 255, 255, 0.05);
+      box-shadow: none;
+    }
+
+    .action-tiers {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    .tier-link {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.75rem 0;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .tier-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      .action-tiers {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     .scroll-hint {
       position: absolute;
       bottom: 2rem;
@@ -643,9 +780,35 @@
       <p class="hero-mission">a socially-minded, human-centered, ai-powered, glass-box independent
         capital firm.</p>
       <div class="hero-actions">
-        <a href="#" class="hero-btn">SHOW LOVE</a>
-        <a href="#" class="hero-btn">INVEST USD</a>
+        <a href="#" class="hero-btn action-trigger">SHOW LOVE</a>
+        <a href="#" class="hero-btn action-trigger">INVEST USD</a>
       </div>
+      
+      <!-- ACTION PANEL -->
+      <div id="actionPanel" class="action-panel hidden">
+        <button id="actionCloseBtn" class="action-close-btn">&times;</button>
+        <div class="action-panel-section">
+          <label id="actionMessageLabel" class="action-label">LOVE MESSAGE</label>
+          <textarea id="actionMessageInput" class="action-input" placeholder="Enter your message (max 300 chars)..." maxlength="300"></textarea>
+        </div>
+        <div class="action-panel-section" style="text-align: center;">
+          <button id="actionSaveBtn" class="hero-btn" style="padding: 0.5rem 1.5rem; font-size: 0.7rem; border-color: rgba(255,255,255,0.2);">SEND</button>
+        </div>
+        <div class="action-panel-section">
+          <label id="actionMoneyLabel" class="action-label">MONEY AS LOVE</label>
+          <div class="action-tiers">
+            <a href="http://127.0.0.1:5500" class="tier-link">Tier 1</a>
+            <a href="http://127.0.0.1:5500" class="tier-link">Tier 2</a>
+            <a href="http://127.0.0.1:5500" class="tier-link">Tier 3</a>
+            <a href="http://127.0.0.1:5500" class="tier-link">Tier 4</a>
+            <a href="http://127.0.0.1:5500" class="tier-link">Tier 5</a>
+            <a href="http://127.0.0.1:5500" class="tier-link">Tier 6</a>
+            <a href="http://127.0.0.1:5500" class="tier-link">Tier 7</a>
+            <a href="http://127.0.0.1:5500" class="tier-link">Tier 8</a>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="scroll-hint">scroll</div>
   </section>
@@ -1029,6 +1192,101 @@
           Logger.interaction(entityName, 'Hover engaged');
         }
         this.classList.remove('fade-out');
+      });
+    });
+
+    /* Action Panel Logic */
+    const actionPanel = document.getElementById('actionPanel');
+    const actionMessageLabel = document.getElementById('actionMessageLabel');
+    const actionMoneyLabel = document.getElementById('actionMoneyLabel');
+    const actionCloseBtn = document.getElementById('actionCloseBtn');
+    const actionSaveBtn = document.getElementById('actionSaveBtn');
+    const actionMessageInput = document.getElementById('actionMessageInput');
+    
+    let currentActionContext = '';
+
+    document.querySelectorAll('.action-trigger').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const actionType = this.textContent.trim();
+        currentActionContext = actionType;
+        
+        if (actionType === 'SHOW LOVE') {
+          actionMessageLabel.textContent = 'LOVE MESSAGE';
+          actionMoneyLabel.textContent = 'MONEY AS LOVE';
+        } else if (actionType === 'INVEST USD') {
+          actionMessageLabel.textContent = 'INVESTMENT MESSAGE';
+          actionMoneyLabel.textContent = 'MONEY AS INVESTMENT';
+        }
+        
+        if (actionPanel.classList.contains('hidden')) {
+          actionPanel.classList.remove('hidden');
+          Logger.interaction('ActionPanel', `Opened via ${actionType}`);
+        } else {
+          Logger.interaction('ActionPanel', `Switched context to ${actionType}`);
+        }
+      });
+    });
+
+    actionCloseBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      actionPanel.classList.add('hidden');
+      Logger.interaction('ActionPanel', 'Closed');
+    });
+
+    actionSaveBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const messageText = actionMessageInput.value.trim();
+      const payload = {
+        context: currentActionContext,
+        message: messageText,
+        timestamp: new Date().toISOString()
+      };
+      
+      console.log(`%c[${Logger.getTime()}]%c %c[SUBMIT]%c Payload: \n` + JSON.stringify(payload, null, 2), 
+        Logger.text, "", Logger.base + "background: #22dd88; color: #020208; font-weight: bold;", Logger.text);
+      
+      if (messageText) {
+        localStorage.setItem('eddyActionMessage', messageText);
+        localStorage.setItem('eddyActionContext', currentActionContext);
+        
+        // Gray-over the message
+        actionMessageInput.disabled = true;
+        actionMessageInput.classList.add('frozen');
+        actionSaveBtn.textContent = 'SAVED';
+        actionSaveBtn.disabled = true;
+        actionSaveBtn.style.opacity = '0.5';
+        
+        Logger.interaction('ActionPanel', 'Message frozen in carbonite');
+      }
+    });
+
+    // Restore frozen state on load
+    const savedMsg = localStorage.getItem('eddyActionMessage');
+    const savedCtx = localStorage.getItem('eddyActionContext');
+    if (savedMsg) {
+      actionMessageInput.value = savedMsg;
+      actionMessageInput.disabled = true;
+      actionMessageInput.classList.add('frozen');
+      actionSaveBtn.textContent = 'SAVED';
+      actionSaveBtn.disabled = true;
+      actionSaveBtn.style.opacity = '0.5';
+      
+      if (savedCtx) {
+        currentActionContext = savedCtx;
+        if (savedCtx === 'SHOW LOVE') {
+          actionMessageLabel.textContent = 'LOVE MESSAGE';
+          actionMoneyLabel.textContent = 'MONEY AS LOVE';
+        } else if (savedCtx === 'INVEST USD') {
+          actionMessageLabel.textContent = 'INVESTMENT MESSAGE';
+          actionMoneyLabel.textContent = 'MONEY AS INVESTMENT';
+        }
+      }
+    }
+
+    document.querySelectorAll('.tier-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        Logger.interaction('ActionPanel', `Clicked ${this.textContent.trim()}`);
       });
     });
   </script>
