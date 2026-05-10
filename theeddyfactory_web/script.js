@@ -217,25 +217,23 @@
       { file: './o-o-h_child.mp3', band: 'Unknown Band', song: 'O-o-h Child', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' }
     ];
 
-    const currentDay = new Date().getDate();
-    let trackIndex = 0;
+    const HOUR_TO_TRACK = {
+      0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0,
+      7: 1, 8: 0, 9: 2, 10: 0, 11: 3, 12: 0, 13: 4, 14: 0, 15: 5, 16: 0,
+      17: 6, 18: 0, 19: 7, 20: 0, 21: 8, 22: 0, 23: 9
+    };
 
-    if (currentDay >= 1 && currentDay <= 10) {
-      trackIndex = currentDay - 1;
-    } else if (currentDay >= 11 && currentDay <= 20) {
-      trackIndex = currentDay - 11;
-    } else if (currentDay >= 21 && currentDay <= 30) {
-      trackIndex = currentDay - 21;
-    } else {
-      // Day 31
-      trackIndex = Math.floor(Math.random() * 10);
-    }
-
+    const currentHour = new Date().getUTCHours();
+    const trackIndex = HOUR_TO_TRACK[currentHour];
     let currentJukeboxTrack = JUKEBOX_TRACKS[trackIndex];
-    console.groupCollapsed(`%c[JUKEBOX]%c Now Playing: ${currentJukeboxTrack.song} by ${currentJukeboxTrack.band} (Day ${currentDay})`, "background: #ff00ff; color: #fff; padding: 2px 4px; border-radius: 2px; font-weight: bold;", "");
-    console.log(`%cCalendar Day:%c ${currentDay}`, "color: #a89880; font-weight: bold;", "");
+
+    const ampm = currentHour >= 12 ? 'PM' : 'AM';
+    const displayHour = currentHour % 12 === 0 ? 12 : currentHour % 12;
+    const hourLabel = `${displayHour}:00 ${ampm}`;
+
+    console.groupCollapsed(`%c[JUKEBOX]%c Now Playing: ${currentJukeboxTrack.song} by ${currentJukeboxTrack.band} (UTC Hour ${currentHour}, ${hourLabel})`, "background: #ff00ff; color: #fff; padding: 2px 4px; border-radius: 2px; font-weight: bold;", "");
+    console.log(`%cUTC Hour:%c ${currentHour}`, "color: #a89880; font-weight: bold;", "");
     console.log(`%cArray Index:%c ${trackIndex}`, "color: #a89880; font-weight: bold;", "");
-    console.log(`%cSelection Logic:%c ${currentDay === 31 ? "Randomized (Day 31)" : "Deterministic (Days 1-30)"}`, "color: #a89880; font-weight: bold;", "");
     console.table({
       "File": currentJukeboxTrack.file,
       "Song": currentJukeboxTrack.song,
@@ -419,15 +417,16 @@
       const messageText = actionMessageInput.value.trim();
       
       // Easter Egg Check
-      const easterEggMatch = messageText.match(/^Day\s+(\d+)\s+Song\s+(\d+)$/i);
+      const easterEggMatch = messageText.match(/^Hour\s+(\d+)$/i);
       if (easterEggMatch) {
-        const d = parseInt(easterEggMatch[1], 10);
-        const s = parseInt(easterEggMatch[2], 10);
-        if (d >= 1 && d <= 10 && s >= 0 && s <= 9 && d === s + 1) {
+        const h = parseInt(easterEggMatch[1], 10);
+        if (h >= 0 && h <= 23) {
           Logger.interaction('EasterEgg', `Jukebox Override Triggered: ${messageText}`);
           
-          const track = JUKEBOX_TRACKS[s];
-          console.groupCollapsed(`%c[JUKEBOX]%c EASTER EGG UNLOCKED: ${track.song}`, "background: #ffaa00; color: #000; padding: 2px 4px; border-radius: 2px; font-weight: bold;", "");
+          const trackIdx = HOUR_TO_TRACK[h];
+          const track = JUKEBOX_TRACKS[trackIdx];
+          
+          console.groupCollapsed(`%c[JUKEBOX]%c Jukebox Override: Simulating UTC Hour ${h}`, "background: #ffaa00; color: #000; padding: 2px 4px; border-radius: 2px; font-weight: bold;", "");
           console.table(track);
           console.groupEnd();
           
