@@ -205,16 +205,16 @@ document.addEventListener('mousemove', function (e) {
  * ═══════════════════════════════════════════════════════════════
  */
 const JUKEBOX_TRACKS = [
-  { file: './chaplin_funk.mp3', band: 'Unknown Band', song: 'Chaplin Funk', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
-  { file: './7.mp3', band: 'Unknown Band', song: '7', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
-  { file: './aint_got_no.mp3', band: 'Unknown Band', song: 'Ain\'t Got No', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
-  { file: './warm_foothills.mp3', band: 'Unknown Band', song: 'Warm Foothills', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
-  { file: './high_steppin.mp3', band: 'Unknown Band', song: 'High Steppin', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
-  { file: './all_my_heroes.mp3', band: 'Unknown Band', song: 'All My Heroes', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
-  { file: './life_in_a_northern_town.mp3', band: 'Unknown Band', song: 'Life in a Northern Town', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
-  { file: './heroes_reprise_version.mp3', band: 'Unknown Band', song: 'Heroes (Reprise Version)', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
-  { file: './the_man_comes_around.mp3', band: 'Unknown Band', song: 'The Man Comes Around', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
-  { file: './o-o-h_child.mp3', band: 'Unknown Band', song: 'O-o-h Child', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' }
+  { file: './sounds/chaplin_funk.mp3', band: 'Unknown Band', song: 'Chaplin Funk', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+  { file: './sounds/7.mp3', band: 'Unknown Band', song: '7', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+  { file: './sounds/aint_got_no.mp3', band: 'Unknown Band', song: 'Ain\'t Got No', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+  { file: './sounds/warm_foothills.mp3', band: 'Unknown Band', song: 'Warm Foothills', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+  { file: './sounds/high_steppin.mp3', band: 'Unknown Band', song: 'High Steppin', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+  { file: './sounds/all_my_heroes.mp3', band: 'Unknown Band', song: 'All My Heroes', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+  { file: './sounds/life_in_a_northern_town.mp3', band: 'Unknown Band', song: 'Life in a Northern Town', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+  { file: './sounds/heroes_reprise_version.mp3', band: 'Unknown Band', song: 'Heroes (Reprise Version)', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+  { file: './sounds/the_man_comes_around.mp3', band: 'Unknown Band', song: 'The Man Comes Around', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' },
+  { file: './sounds/o-o-h_child.mp3', band: 'Unknown Band', song: 'O-o-h Child', album: 'Unknown Album', publisher: 'Unknown Publisher', bandUrl: '#', publisherUrl: '#' }
 ];
 
 const HOUR_TO_TRACK = {
