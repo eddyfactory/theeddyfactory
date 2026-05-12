@@ -421,7 +421,8 @@
     .entity-name {
       font-size: 1.3rem;
       font-weight: 400;
-      margin-bottom: 0.5rem
+      margin-bottom: 0.5rem;
+      text-align: center;
     }
 
     .entity-name a {
