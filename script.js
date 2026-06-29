@@ -28,7 +28,7 @@ audio.addEventListener('canplaythrough', function () {
 
 const sites = [
   { id: 0, code: "EDDY", color: "white", hex: "#ffffff", company: "the eddy factory", repo: "theeddyfactory", url: "https://theeddyfactory.com" },
-  { id: 1, code: "EFAC", color: "pink", hex: "#ff4488", company: "Eddy Factory", repo: "eddyfactory", url: "https://eddyfactory.com" },
+  { id: 1, code: "EFAC", color: "pink", hex: "#ff4488", company: "eddy factory", repo: "eddyfactory", url: "https://eddyfactory.com" },
   { id: 2, code: "GOOD", color: "orange", hex: "#ff8800", company: "big GOOD productions", repo: "biggoodproductions", url: "https://biggoodproductions.com" },
   { id: 3, code: "ROBO", color: "yellow", hex: "#ffcc00", company: "roboduck", repo: "roboduck", url: "https://roboduck.com" },
   { id: 4, code: "DASS", color: "green", hex: "#00cc66", company: "Dream Animated StudioS", repo: "dreamanimatedstudios", url: "https://dreamanimatedstudios.com" },
