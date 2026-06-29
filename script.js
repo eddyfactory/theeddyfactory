@@ -1,3 +1,31 @@
+// ─── PRIORITY AUDIO PRELOAD ───
+// The default track is the key to the experience. Start caching it the
+// instant the script runs — long before the human modal is dismissed —
+// so playback is instant when the user clicks to start the show.
+const DEFAULT_TRACK = './sounds/chaplin_funk.mp3';
+
+const audio = new Audio();
+audio.preload = 'auto';
+audio.loop = true;
+audio.volume = 0.3;
+audio.src = DEFAULT_TRACK;
+audio.load();
+
+let silenced = false;
+let started = false;
+let audioReady = false;
+let pendingStart = false;   // user clicked Yes/No before the file finished caching
+
+audio.addEventListener('canplaythrough', function () {
+  audioReady = true;
+  // If the user already clicked while we were still buffering, honor that
+  // intent now that the track is cached.
+  if (pendingStart) {
+    pendingStart = false;
+    startAudio();
+  }
+}, { once: true });
+
 const sites = [
   { id: 0, code: "EDDY", color: "white", hex: "#ffffff", company: "the eddy factory", repo: "theeddyfactory", url: "https://theeddyfactory.com" },
   { id: 1, code: "EFAC", color: "pink", hex: "#ff4488", company: "Eddy Factory", repo: "eddyfactory", url: "https://eddyfactory.com" },
@@ -288,13 +316,19 @@ console.table({
 });
 console.groupEnd();
 
+// The audio element was preloaded with DEFAULT_TRACK at the top of the file.
+// If the jukebox is on and selected a different track, point the (already
+// warmed) element at it now. When jukebox_on is false this is a no-op and
+// the default track stays cached and ready.
+if (currentJukeboxTrack.file !== DEFAULT_TRACK) {
+  audio.src = currentJukeboxTrack.file;
+  audio.load();
+}
+
 /* ═══════════════════════════════════════════════════════════════ */
 
-var audio = new Audio(currentJukeboxTrack.file);
-audio.loop = true;
-audio.volume = 0.3;
-var silenced = false;
-var started = false;
+/* Audio is created and preloaded at the very top of this file so the
+ * default track caches before the human modal is dismissed. */
 
 function startAudio() {
   if (started) return;
@@ -331,9 +365,26 @@ document.getElementById("audioBtn").addEventListener("click", function (e) {
 document.querySelectorAll('#humanModal .human-btn').forEach(function (btn) {
   btn.addEventListener('click', function (e) {
     e.stopPropagation(); // prevent document click listener from double firing
-    Logger.system('Human verification confirmed. Bypassing browser sandbox.');
-    startAudio();
-    document.getElementById('humanModal').classList.add('hidden');
+    Logger.system('Human verification confirmed.');
+
+    const modal = document.getElementById('humanModal');
+
+    if (audioReady) {
+      // Track already cached — start instantly and dismiss.
+      startAudio();
+      modal.classList.add('hidden');
+    } else {
+      // Track still caching (slow connection). Register intent, show a brief
+      // "tuning in" state, and start + dismiss the moment it's ready. No dead
+      // clicks, no silent failure.
+      pendingStart = true;
+      const content = btn.closest('.human-modal-content');
+      if (content) content.classList.add('tuning');
+      Logger.system('Track still caching — starting show when ready.');
+      audio.addEventListener('canplaythrough', function () {
+        modal.classList.add('hidden');
+      }, { once: true });
+    }
   });
 });
 
